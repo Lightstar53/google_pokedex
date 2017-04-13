@@ -1,0 +1,150 @@
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+body{
+  background-image: url(../img/pokeball.png);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+nav ul a,
+nav .brand-logo {
+  color: #444;
+}
+
+p {
+  line-height: 2rem;
+}
+
+.button-collapse {
+  color: #26a69a;
+}
+
+.parallax-container {
+  min-height: 380px;
+  line-height: 0;
+  height: auto;
+  color: rgba(255,255,255,.9);
+}
+  .parallax-container .section {
+    width: 100%;
+  }
+
+@media only screen and (max-width : 992px) {
+  .parallax-container .section {
+    position: absolute;
+    top: 40%;
+  }
+  #index-banner .section {
+    top: 10%;
+  }
+}
+
+@media only screen and (max-width : 600px) {
+  #index-banner .section {
+    top: 0;
+  }
+}
+
+.icon-block {
+  padding: 0 15px;
+}
+.icon-block .material-icons {
+  font-size: inherit;
+}
+
+footer.page-footer {
+  margin: 0;
+}
+h5.capitalize{
+  text-transform: capitalize;
+}
+
+#footer{
+    position:fixed;
+    bottom:0px;
+    left:0px;
+    right:0px;
+    margin-bottom:0px;
+}
+
+.modal {height:90% !important;}
+
+.icon{
+  background: url(../img/pokeball.png);
+
+  display: block;
+}
+
+.img.resize{
+  max-width:20%;
+  max-height:20%;
+}
+
+.toast{
+  top: auto !important;
+  right: auto !important;
+  bottom: 50%;
+}
+
+.modal.bottom-sheet{
+  max-height: 90%;
+}
+
+#pokepic{
+  max-width:300px;
+}
+.center {
+    text-align: center;
+}
+
+.modal {
+    background-color: #fff;
+    &.modal-fixed-header {
+        padding: 0;
+        height: 70%;
+        .modal-header {
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            position: absolute;
+            top: 0;
+        }
+        .modal-header {
+            border-radius: 0 0 2px 2px;
+            //background-color: #fafafa;
+            padding: 4px 6px;
+            height: 56px;
+            width: 100%;
+        }
+        .modal-content {
+            position: absolute;
+            top:56px;
+            height: calc(100% - 56px);
+            max-height: 100%;
+            width: 100%;
+            overflow-y: auto;
+        }
+    }
+}
+
+#pokeStats{
+  max-width: 400px;
+}
+
+canvas {
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+.progress{
+  background-color: #ffb4d9;
+}
+
+.evoImg{
+  max-width: 50px;
+}
