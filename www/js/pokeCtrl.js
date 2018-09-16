@@ -373,7 +373,7 @@ app.controller("pokeCtrl", function($scope) {
 			var pokemon = data;
 
 			console.log(pokemon);
-			description = (pokemon.flavor_text_entries[2].flavor_text);
+			description = (pokemon.flavor_text_entries[1].flavor_text);
 			var egg_group = returnList(data.egg_groups);
 			egg_groups_list = data.egg_groups;
 
@@ -451,13 +451,13 @@ app.controller("pokeCtrl", function($scope) {
 					evo_string += "<div><img class='evoImg' src='img/pokemon/"+evoChain[i].id+".png'> ";
 				else{
 					if(evoChain[i].trigger_name == "level-up")
-						evo_string += "<span>→lvl. "+evoChain[i].min_level +"→’"+"<img class='evoImg' src='img/pokemon/"+evoChain[i].id+".png'>"+"</span> ";
+						evo_string += "<span>→lvl. "+evoChain[i].min_level +"→"+"<img class='evoImg' src='img/pokemon/"+evoChain[i].id+".png'>"+"</span> ";
 					else if(evoChain[i].trigger_name == "use-item")
-						evo_string += "<span>→"+ capitalize(evoChain[i].item.name) +"→’"+"<img class='evoImg' src='img/pokemon/"+evoChain[i].id+".png'></span> ";
+						evo_string += "<span>→"+ capitalize(evoChain[i].item.name) +"→"+"<img class='evoImg' src='img/pokemon/"+evoChain[i].id+".png'></span> ";
 					else if(evoChain[i].trigger_name==null)
 						evo_string += "<span>"+"<img class='evoImg' src='img/pokemon/"+evoChain[i].id+".png'></span> ";
 					else
-						evo_string += "<span>→"+ capitalize(evoChain[i].trigger_name)+"→’"+"<img class='evoImg' src='img/pokemon/"+evoChain[i].id+".png'>"+"</span> ";
+						evo_string += "<span>→"+ capitalize(evoChain[i].trigger_name)+"→"+"<img class='evoImg' src='img/pokemon/"+evoChain[i].id+".png'>"+"</span> ";
 					if(i==evoChain.length-1)
 						evo_string+="</div>";
 				}
