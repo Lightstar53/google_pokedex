@@ -443,10 +443,14 @@ app.controller("pokeCtrl", function($scope) {
 					var last_evolve = evolves_into.evolves_to[0];
 					var details = last_evolve.evolution_details[0];
 					var evolve_type;
+					console.log(details);
 					if(details.trigger.name=="level-up"){
 						if(details.min_level!=null)
 							evolve_type = "→lvl. "+details.min_level + "→";
 					
+					}
+					else if (details.trigger.name == "trade") {
+						evolve_type = "→ Trade →";
 					}
 					else{
 						evolve_type = "→" + capitalize(details.item.name) + "→";
