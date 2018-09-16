@@ -1,5 +1,3 @@
-
-
 $(document).ready(function(){
 	swal("Welcome!", "Try typing in a Pokemon name to get started.");
 	$('.modal').modal({

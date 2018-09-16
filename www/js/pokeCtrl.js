@@ -1,4 +1,4 @@
-var app = angular.module("pokeApp", ['ionic']);
+var app = angular.module("pokeApp", []);
 var current_id = 1;
 var current_poke="bulbasaur";
 var suggestions=[];
@@ -373,7 +373,7 @@ app.controller("pokeCtrl", function($scope) {
 			var pokemon = data;
 
 			console.log(pokemon);
-			description = (pokemon.flavor_text_entries[1].flavor_text);
+			description = (pokemon.flavor_text_entries[2].flavor_text);
 			var egg_group = returnList(data.egg_groups);
 			egg_groups_list = data.egg_groups;
 
@@ -424,54 +424,47 @@ app.controller("pokeCtrl", function($scope) {
 					'type': ""});
 			}
 
-			if(chain.evolves_to.length >0){
-				var evolves_into = chain.evolves_to[0];
-				var details = evolves_into.evolution_details[0];
-				var evolve_type;
-				if(details.trigger.name=="level-up")
-					if(details.min_level!=null)
-						evolve_type = "→lvl. "+details.min_level + "→";
-				else{
+			var evoChain = [];
+			var evoData = chain;
 
-					evolve_type = capitalize(details.item.name);
-				}
+			// Compute evolution chain
+			do {
+			  var evoDetails = evoData['evolution_details'][0];
+			  var id = getIdFromUrl(evoData.species.url,"pokemon-species");
+			  if(id<151){
+				  evoChain.push({
+				    "species_name": capitalize(evoData.species.name),
+				    "min_level": !evoDetails ? 1 : evoDetails.min_level,
+				    "trigger_name": !evoDetails ? null : evoDetails.trigger.name,
+				    "item": !evoDetails ? null : evoDetails.item,
+				    'id': id
+				  });
+				 }
 
-				evo_chain.push({'name': capitalize(evolves_into.species.name),
-					'id': getIdFromUrl(evolves_into.species.url,"pokemon-species"),
-					'type': evolve_type});
-				if(evolves_into.evolves_to.length>0){
-					var last_evolve = evolves_into.evolves_to[0];
-					var details = last_evolve.evolution_details[0];
-					var evolve_type;
-					console.log(details);
-					if(details.trigger.name=="level-up"){
-						if(details.min_level!=null)
-							evolve_type = "→lvl. "+details.min_level + "→";
-					
-					}
-					else if (details.trigger.name == "trade") {
-						evolve_type = "→ Trade →";
-					}
-					else{
-						evolve_type = "→" + capitalize(details.item.name) + "→";
-					}
-
-					evo_chain.push({'name': capitalize(last_evolve.species.name),
-					'id': getIdFromUrl(last_evolve.species.url,"pokemon-species"),
-					'type': evolve_type});
-				}
-			}
+			  evoData = evoData['evolves_to'][0];
+			} while (!!evoData && evoData.hasOwnProperty('evolves_to'));
+			console.log(evoChain);
 
 			var evo_string ="";
-			for(var i=0; i<evo_chain.length; i++){
-				
-				evo_string += evo_chain[i].type +" " + 
-				` <img class="evoImg" src="img/pokemon/${evo_chain[i].id}.png"> `;
+			for(var i=0; i<evoChain.length; i++){
+				if(i==0)
+					evo_string += "<div><img class='evoImg' src='img/pokemon/"+evoChain[i].id+".png'> ";
+				else{
+					if(evoChain[i].trigger_name == "level-up")
+						evo_string += "<span>→lvl. "+evoChain[i].min_level +"→’"+"<img class='evoImg' src='img/pokemon/"+evoChain[i].id+".png'>"+"</span> ";
+					else if(evoChain[i].trigger_name == "use-item")
+						evo_string += "<span>→"+ capitalize(evoChain[i].item.name) +"→’"+"<img class='evoImg' src='img/pokemon/"+evoChain[i].id+".png'></span> ";
+					else if(evoChain[i].trigger_name==null)
+						evo_string += "<span>"+"<img class='evoImg' src='img/pokemon/"+evoChain[i].id+".png'></span> ";
+					else
+						evo_string += "<span>→"+ capitalize(evoChain[i].trigger_name)+"→’"+"<img class='evoImg' src='img/pokemon/"+evoChain[i].id+".png'>"+"</span> ";
+					if(i==evoChain.length-1)
+						evo_string+="</div>";
+				}
 			}
+
 			$('#evo').html(evo_string);
 
-			
-			//console.log(evo_chain);
     	});
 	}
 
