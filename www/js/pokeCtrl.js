@@ -366,7 +366,7 @@ app.controller("pokeCtrl", function($scope) {
 	// Figure out egg group and gender
 	function getPokemonSpecies(id)
 	{
-		var full = "http://pokeapi.co/api/v2/pokemon-species/"+id;
+		var full = "https://pokeapi.co/api/v2/pokemon-species/"+id;
 		$.getJSON(full, function(data) { //jquery shorthhand of
 			//return data;
 			//console.log(data);
