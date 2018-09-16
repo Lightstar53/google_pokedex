@@ -4,6 +4,7 @@ var current_poke="bulbasaur";
 var suggestions=[];
 var description;
 var type_url = [];
+var api_url = "https://cors.now.sh/https://pokeapi.co/api/v2/";
 app.controller("pokeCtrl", function($scope) {
 	$scope.pokemon_list = [];
 
@@ -123,7 +124,7 @@ app.controller("pokeCtrl", function($scope) {
 	$scope.getPokemonObject= function(number, pokename){
 		console.log("loading...");
 		current_id = number;
-		var full = "http://pokeapi.co/api/v2/pokemon/"+number;
+		var full = `${api_url}/pokemon/${number}/`;
 
 		var pokename = getNameFromId(number);
 		if(pokename!=null)
@@ -215,7 +216,7 @@ app.controller("pokeCtrl", function($scope) {
 	// Gets all of the pokemon from a pokedex request
 	function getAllPokemon(){
 		var toast = Materialize.toast('Loading all Pokemon...');
-		var full = "http://pokeapi.co/api/v2/pokedex/1/";
+		var full = `${api_url}/pokedex/1/`;
 		$.getJSON(full, function(response) {
 			
 			console.log(response);
@@ -366,7 +367,7 @@ app.controller("pokeCtrl", function($scope) {
 	// Figure out egg group and gender
 	function getPokemonSpecies(id)
 	{
-		var full = "http://pokeapi.co/api/v2/pokemon-species/"+id;
+		var full = `${api_url}/pokemon-species/${id}/`;
 		$.getJSON(full, function(data) { //jquery shorthhand of
 			//return data;
 			//console.log(data);
