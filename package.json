@@ -3,11 +3,13 @@
   "version": "1.1.1",
   "description": "google_pokedex: An Ionic project",
   "dependencies": {
+    "cors": "^2.8.4",
     "gulp": "^3.5.6",
-    "gulp-sass": "^2.0.4",
     "gulp-concat": "^2.2.0",
     "gulp-minify-css": "^0.3.0",
-    "gulp-rename": "^1.2.0"
+    "gulp-rename": "^1.2.0",
+    "gulp-sass": "^2.0.4",
+    "morgan": "^1.9.1"
   },
   "devDependencies": {
     "@ionic/v1-toolkit": "1.0.8",
