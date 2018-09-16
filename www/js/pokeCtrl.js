@@ -389,10 +389,13 @@ app.controller("pokeCtrl", function($scope) {
 				var genderMale = 100.0-genderFemale;
 				var maleString = genderMale.toString()+"%";
 				var genderString = maleString+" ♂ , "+femaleString+" ♀";
+				$('.progress').css('background-color', '#ffb4d9');
 				$('#gender').html((genderString));
 				$("#gender_bar").width(maleString);
+				
 			}
 			else{
+				$('.progress').css('background-color', '#B8B8B8');
 				$('#gender').html("No gender ⚲");
 				$("#gender_bar").width("0%");
 			}
@@ -427,7 +430,7 @@ app.controller("pokeCtrl", function($scope) {
 				var evolve_type;
 				if(details.trigger.name=="level-up")
 					if(details.min_level!=null)
-						evolve_type = "Level "+details.min_level;
+						evolve_type = "→lvl. "+details.min_level + "→";
 				else{
 
 					evolve_type = capitalize(details.item.name);
@@ -442,11 +445,11 @@ app.controller("pokeCtrl", function($scope) {
 					var evolve_type;
 					if(details.trigger.name=="level-up"){
 						if(details.min_level!=null)
-							evolve_type = "Level "+details.min_level;
+							evolve_type = "→lvl. "+details.min_level + "→";
 					
 					}
 					else{
-						evolve_type = capitalize(details.item.name);
+						evolve_type = "→" + capitalize(details.item.name) + "→";
 					}
 
 					evo_chain.push({'name': capitalize(last_evolve.species.name),
@@ -458,7 +461,8 @@ app.controller("pokeCtrl", function($scope) {
 			var evo_string ="";
 			for(var i=0; i<evo_chain.length; i++){
 				
-				evo_string += evo_chain[i].type +" "+evo_chain[i].name+" ";
+				evo_string += evo_chain[i].type +" " + 
+				` <img class="evoImg" src="img/pokemon/${evo_chain[i].id}.png"> `;
 			}
 			$('#evo').html(evo_string);
 

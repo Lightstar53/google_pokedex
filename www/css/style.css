@@ -6,7 +6,7 @@
  * Made By MaterializeCSS.com
  */
 
-body{
+ body{
   background-image: url(../img/pokeball.png);
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -96,7 +96,7 @@ h5.capitalize{
 }
 
 #pokepic{
-  max-width:300px;
+  max-width:250px;
 }
 .center {
     text-align: center;
@@ -146,5 +146,6 @@ canvas {
 }
 
 .evoImg{
-  max-width: 50px;
+  vertical-align:middle;
+  max-width: 75px;
 }
