@@ -227,10 +227,10 @@ app.controller("pokeCtrl", function($scope) {
 			{
 				var id = pokedex_list[i].entry_number;
 				var name = pokedex_list[i].pokemon_species.name;
-				//if(parseInt(id)<=151){
+				if(parseInt(id)<=151){
 					pokemon_names.push(name);
 					pokemon_id.push(id);
-				//}
+				}
 			}
 
 			// Combine the arrays
@@ -259,7 +259,7 @@ app.controller("pokeCtrl", function($scope) {
 		var url = ability.url;
 		console.log(ability);
 		$.getJSON(url, function(response) {
-			var name = response.names[0].name;
+			var name = response.names[2].name;
 			console.log(response);
 			var effect = response.effect_entries[0].effect;
 			//swal(url);
@@ -372,14 +372,15 @@ app.controller("pokeCtrl", function($scope) {
 			//console.log(data);
 			var pokemon = data;
 
+			console.log(pokemon);
 			description = (pokemon.flavor_text_entries[1].flavor_text);
 			var egg_group = returnList(data.egg_groups);
 			egg_groups_list = data.egg_groups;
 
 			$('#egg_groups').html(listToString(egg_group));
 
-			var genera = pokemon.genera[0].genus;
-			$('#genera').html("The "+genera+" Pokemon");
+			var genera = pokemon.genera[2].genus;
+			$('#genera').html("The "+genera);
 			$('#pokechip').attr("src", ("img/pokemon/"+id+".png"));
 			var genderFemale = ((parseFloat(data.gender_rate)/8.0) * 100);
 			var femaleString = genderFemale.toString() +"%";
