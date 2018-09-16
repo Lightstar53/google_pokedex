@@ -4,7 +4,7 @@ var current_poke="bulbasaur";
 var suggestions=[];
 var description;
 var type_url = [];
-var api_url = "https://pokeapi.co/api/v2/";
+var api_url = "https://pokeapi.co/api/v2";
 app.controller("pokeCtrl", function($scope) {
 	$scope.pokemon_list = [];
 
