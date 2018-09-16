@@ -123,7 +123,7 @@ app.controller("pokeCtrl", function($scope) {
 	$scope.getPokemonObject= function(number, pokename){
 		console.log("loading...");
 		current_id = number;
-		var full = "http://pokeapi.co/api/v2/pokemon/"+number;
+		var full = "http://pokeapi.salestock.net/api/v2/pokemon/"+number;
 
 		var pokename = getNameFromId(number);
 		if(pokename!=null)
@@ -215,7 +215,7 @@ app.controller("pokeCtrl", function($scope) {
 	// Gets all of the pokemon from a pokedex request
 	function getAllPokemon(){
 		var toast = Materialize.toast('Loading all Pokemon...');
-		var full = "http://pokeapi.co/api/v2/pokedex/1/";
+		var full = "http://pokeapi.salestock.net/api/v2/pokedex/1/";
 		$.getJSON(full, function(response) {
 			
 			console.log(response);
@@ -366,7 +366,7 @@ app.controller("pokeCtrl", function($scope) {
 	// Figure out egg group and gender
 	function getPokemonSpecies(id)
 	{
-		var full = "https://pokeapi.co/api/v2/pokemon-species/"+id;
+		var full = "http://pokeapi.salestock.net/api/v2/pokemon-species/"+id;
 		$.getJSON(full, function(data) { //jquery shorthhand of
 			//return data;
 			//console.log(data);
