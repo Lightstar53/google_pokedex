@@ -201,7 +201,7 @@ app.controller("pokeCtrl", function($scope) {
 			// Get Pokemon Species info
 			getPokemonSpecies(number);
 
-			$('#pokepic').attr("src", ("img/official-artwork/"+number+".png"));
+			$('#pokepic').attr("src", ("img/artwork/"+number+".png"));
 			
 			$('#pokecontent').attr("class", ("modal-content "+returnColor(types[0])));
 			$('.modal').modal();
