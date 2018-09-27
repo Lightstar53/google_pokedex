@@ -1,34 +1,83 @@
 var app = angular.module("pokeApp", []);
-var current_id = 1;
-var current_poke="bulbasaur";
-var suggestions=[];
-var description;
-var type_url = [];
-var api_url = "https://pokeapi.co/api/v2";
+
 app.controller("pokeCtrl", function($scope) {
-	$scope.pokemon_list = [];
+
+	// Global variables
+	var description;
+	var egg_groups_list;
+	var PieChart;
+	var current_id 		= 1;
+	var global_egg_list = [];
+	var global_types 	= [];
+	var suggestions 	= [];
+	var type_url 		= [];
+	var current_poke 	= "bulbasaur";
+	var api_url 		= "https://pokeapi.co/api/v2";
+
+	// Global scopes
+	$scope.pokemon_list 	= [];
+	$scope.poke_abilities 	= [];
 
 	// Put all pokemon into a list
 	getAllPokemon();
 
-	$scope.poke_abilities = [];
-	var egg_groups_list;
-	var global_egg_list=[];
-	var global_types=[];
-	var PieChart;
-	
-	var ctx = document.getElementById("pokeStats");
-	PieChart = new Chart(ctx, {
-    data: [1,2,3],
-    type: "doughnut",
-	    options: {
-	        elements: {
-	            arc: {
-	                borderColor: "white"
-	            }
-	        }
-	    }
-	});
+	// Initialize chart
+	initChart();
+
+	// Gets all of the pokemon from a pokedex request
+	function getAllPokemon() {
+		var toast = Materialize.toast('Loading all Pokemon...');
+		var full = `${api_url}/pokedex/1/`;
+		$.getJSON(full, function(response) {
+			console.log(response);
+			var pokedex_list= (response.pokemon_entries);
+			var pokemon_names = [];
+			var pokemon_id = [];
+
+			for(var i=0; i<pokedex_list.length; i++)
+			{
+				var id = pokedex_list[i].entry_number;
+				var name = pokedex_list[i].pokemon_species.name;
+				if(parseInt(id)<=151){
+					pokemon_names.push(name);
+					pokemon_id.push(id);
+				}
+			}
+
+			// Combine the arrays
+			for (var j=0; j<pokemon_names.length; j++)
+				$scope.pokemon_list.push({'name':pokemon_names[j], 'id':pokemon_id[j]});
+
+			// Sort
+			$scope.pokemon_list.sort(function(a,b){
+				return a.id- b.id;
+			});
+
+			// Seperate them back out:
+			for (var k=0; k<$scope.pokemon_list.length; k++){
+				pokemon_names[k] = $scope.pokemon_list[k].name;
+				pokemon_id[k] = $scope.pokemon_list[k].id;
+			}
+
+			$('.toast').fadeOut();
+			 
+		});	
+	}
+
+	function initChart() {
+		var ctx = document.getElementById("pokeStats");
+		PieChart = new Chart(ctx, {
+		data: [1,2,3],
+		type: "doughnut",
+			options: {
+				elements: {
+					arc: {
+						borderColor: "white"
+					}
+				}
+			}
+		});
+	}
 
 	$scope.nextPokemon = function(){
 		if(current_id<$scope.pokemon_list.length)
@@ -141,7 +190,7 @@ app.controller("pokeCtrl", function($scope) {
 			$('#pokename').html("[#"+number+"] "+capitalize(pokemon.name));
 
 			$scope.$apply(function() {
-    			$scope.poke_abilities = [];
+				$scope.poke_abilities = [];
 				for(var i=pokemon.abilities.length-1; i>=0; i--){
 					var hidden = pokemon.abilities[i].is_hidden;
 					var color;
@@ -210,49 +259,10 @@ app.controller("pokeCtrl", function($scope) {
 
 	function capitalize(string) 
 	{
-    	return string.charAt(0).toUpperCase() + string.slice(1);
+		return string.charAt(0).toUpperCase() + string.slice(1);
 	}
 
-	// Gets all of the pokemon from a pokedex request
-	function getAllPokemon(){
-		var toast = Materialize.toast('Loading all Pokemon...');
-		var full = `${api_url}/pokedex/1/`;
-		$.getJSON(full, function(response) {
-			
-			console.log(response);
-			var pokedex_list= (response.pokemon_entries);
-			var pokemon_names = [];
-			var pokemon_id = [];
-
-			for(var i=0; i<pokedex_list.length; i++)
-			{
-				var id = pokedex_list[i].entry_number;
-				var name = pokedex_list[i].pokemon_species.name;
-				if(parseInt(id)<=151){
-					pokemon_names.push(name);
-					pokemon_id.push(id);
-				}
-			}
-
-			// Combine the arrays
-			for (var j=0; j<pokemon_names.length; j++)
-				$scope.pokemon_list.push({'name':pokemon_names[j], 'id':pokemon_id[j]});
-
-			// Sort
-			$scope.pokemon_list.sort(function(a,b){
-				return a.id- b.id;
-			});
-
-			// Seperate them back out:
-			for (var k=0; k<$scope.pokemon_list.length; k++){
-				pokemon_names[k] = $scope.pokemon_list[k].name;
-				pokemon_id[k] = $scope.pokemon_list[k].id;
-			}
-
-			$('.toast').fadeOut();
-			 
-		});	
-	}
+	
 
 	// Display ability given url
 	$scope.displayAbility = function(ability){
@@ -434,11 +444,11 @@ app.controller("pokeCtrl", function($scope) {
 			  var id = getIdFromUrl(evoData.species.url,"pokemon-species");
 			  if(id<151){
 				  evoChain.push({
-				    "species_name": capitalize(evoData.species.name),
-				    "min_level": !evoDetails ? 1 : evoDetails.min_level,
-				    "trigger_name": !evoDetails ? null : evoDetails.trigger.name,
-				    "item": !evoDetails ? null : evoDetails.item,
-				    'id': id
+					"species_name": capitalize(evoData.species.name),
+					"min_level": !evoDetails ? 1 : evoDetails.min_level,
+					"trigger_name": !evoDetails ? null : evoDetails.trigger.name,
+					"item": !evoDetails ? null : evoDetails.item,
+					'id': id
 				  });
 				 }
 
@@ -466,7 +476,7 @@ app.controller("pokeCtrl", function($scope) {
 
 			$('#evo').html(evo_string);
 
-    	});
+		});
 	}
 
 	function getIdFromUrl(url,searchTerm){
@@ -488,80 +498,80 @@ app.controller("pokeCtrl", function($scope) {
 	}
 
 	function pushSuggestions(n, ordered, stats)
-    {
-    	var statsType= ["Speed","Sp. Def", "Sp. Atk","Defense","Attack","HP"];
+	{
+		var statsType= ["Speed","Sp. Def", "Sp. Atk","Defense","Attack","HP"];
 
-      // Attack
-      if(ordered[n].name == "Attack"){
-      	if(stats[4]-stats[2]>6)
-          suggestions.push("Adamant");
-        if(stats[4]-stats[2]<6 || 
-          stats[4]-stats[0]>6)
-          suggestions.push("Brave");
-      }
-      // Defense
-      else if(ordered[n].name == "Defense"){
-         if(stats[3]-stats[4]>6)
-          suggestions.push("Bold");
-        if(stats[3]-stats[2]>6)
-          suggestions.push("Impish");
-        if(stats[4]-stats[0]>6)
-          suggestions.push("Relaxed");
-      }
-      // Sp Attack
-      else if(ordered[n].name == "Sp. Atk"){
-        if(stats[2]-stats[4]>6)
-          suggestions.push("Modest");
-        if(stats[2]-stats[4]<6 ||
-          stats[2]-stats[0]>6)
-          suggestions.push("Quiet");
-      }
-      // Sp Defense
-      else if(ordered[n].name == "Sp. Def"){
-      	if(stats[1]-stats[4]>6)
-          suggestions.push("Calm");
-        if(stats[1]-stats[2]>6)
-          suggestions.push("Careful");
-        if(stats[1]-stats[0]>6)
-          suggestions.push("Sassy");
-      }
-      // Speed
-      else if(ordered[n].name == "Speed"){
-        if(stats[0]-stats[2]>6)
-          suggestions.push("Jolly");
-        if(stats[0]-stats[4]>6)
-          suggestions.push("Timid");
-      }
-    }
+	  // Attack
+	  if(ordered[n].name == "Attack"){
+	  	if(stats[4]-stats[2]>6)
+		  suggestions.push("Adamant");
+		if(stats[4]-stats[2]<6 || 
+		  stats[4]-stats[0]>6)
+		  suggestions.push("Brave");
+	  }
+	  // Defense
+	  else if(ordered[n].name == "Defense"){
+		 if(stats[3]-stats[4]>6)
+		  suggestions.push("Bold");
+		if(stats[3]-stats[2]>6)
+		  suggestions.push("Impish");
+		if(stats[4]-stats[0]>6)
+		  suggestions.push("Relaxed");
+	  }
+	  // Sp Attack
+	  else if(ordered[n].name == "Sp. Atk"){
+		if(stats[2]-stats[4]>6)
+		  suggestions.push("Modest");
+		if(stats[2]-stats[4]<6 ||
+		  stats[2]-stats[0]>6)
+		  suggestions.push("Quiet");
+	  }
+	  // Sp Defense
+	  else if(ordered[n].name == "Sp. Def"){
+	  	if(stats[1]-stats[4]>6)
+		  suggestions.push("Calm");
+		if(stats[1]-stats[2]>6)
+		  suggestions.push("Careful");
+		if(stats[1]-stats[0]>6)
+		  suggestions.push("Sassy");
+	  }
+	  // Speed
+	  else if(ordered[n].name == "Speed"){
+		if(stats[0]-stats[2]>6)
+		  suggestions.push("Jolly");
+		if(stats[0]-stats[4]>6)
+		  suggestions.push("Timid");
+	  }
+	}
 	function showStats(list){
 
 		var ctx = document.getElementById("pokeStats");
 		var data = {
-		    datasets: [{
-		        data: list,
-		        backgroundColor: [
-		            "#FF6384",
-		            "#4BC0C0",
-		            "#FFCE56",
-		            "#E7E9ED",
-		            "#36A2EB",
-		            "#7e57c2"
-		        ],
-		        label: 'My dataset' // for legend
-		    }],
-		    labels: ["Speed","Sp. Def", "Sp. Atk","Defense","Attack","HP"],
+			datasets: [{
+				data: list,
+				backgroundColor: [
+					"#FF6384",
+					"#4BC0C0",
+					"#FFCE56",
+					"#E7E9ED",
+					"#36A2EB",
+					"#7e57c2"
+				],
+				label: 'My dataset' // for legend
+			}],
+			labels: ["Speed","Sp. Def", "Sp. Atk","Defense","Attack","HP"],
 		};
 
 	 PieChart = new Chart(ctx, {
-	    data: data,
-	    type: "polarArea",
-	    options: {
-	        elements: {
-	            arc: {
-	                borderColor: "white"
-	            }
-	        }
-	    }
+		data: data,
+		type: "polarArea",
+		options: {
+			elements: {
+				arc: {
+					borderColor: "white"
+				}
+			}
+		}
 		});
 	}
 
