@@ -34,8 +34,7 @@ app.controller("pokeCtrl", function($scope) {
 			var pokemon_names = [];
 			var pokemon_id = [];
 
-			for(var i=0; i<pokedex_list.length; i++)
-			{
+			for(var i=0; i<pokedex_list.length; i++) {
 				var id = pokedex_list[i].entry_number;
 				var name = pokedex_list[i].pokemon_species.name;
 				if(parseInt(id)<=151){
@@ -60,8 +59,7 @@ app.controller("pokeCtrl", function($scope) {
 			}
 
 			$('.toast').fadeOut();
-			 
-		});	
+		});
 	}
 
 	function initChart() {
@@ -79,29 +77,20 @@ app.controller("pokeCtrl", function($scope) {
 		});
 	}
 
-	$scope.nextPokemon = function(){
+	$scope.nextPokemon = function() {
 		if(current_id<$scope.pokemon_list.length)
 			$scope.getPokemonObject(current_id+1);
 	}
-	$scope.prevPokemon = function(){
-		console.log("prev");
+	$scope.prevPokemon = function() {
 		if(current_id>1)
 			$scope.getPokemonObject(current_id-1);
-		
-	}
-	$scope.prevPokemon = function(){
-		console.log("prev");
-		if(current_id>1)
-			$scope.getPokemonObject(current_id-1);	
 	}
 	$scope.showMates = function(){
 		Materialize.toast('Loading Pokemon: ');
 		global_egg_list=[];
 		for(var i=0; i<egg_groups_list.length; i++){
 			var url = egg_groups_list[i].url;
-			
-			$.when(getPokeFromEggGroup(url)).done(function(){
-				
+			$.when(getPokeFromEggGroup(url)).done(function() {
 			});
 		}
 	}
