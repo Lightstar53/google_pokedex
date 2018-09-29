@@ -3,190 +3,190 @@
 <html lang="en">
 
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
-	<title>PokeAPI-Dex</title>
-	<link rel="icon" type="image/png" href="favicon.png"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+    <title>PokeAPI-Dex</title>
+    <link rel="icon" type="image/png" href="favicon.png"/>
 
-	<!-- CSS  -->
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-	<link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-	<link href="css/animate.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-	<link href="css/sweetalert.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="css/animate.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="css/sweetalert.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 </head>
 
 <body class="light-green lighten-5">
 
-	<!-- Navigation bar -->
-	<nav class="animated slideInLeft">
-		<div class="nav-wrapper">
-			<a href="#" class="brand-logo center">
-			<i class='icon'></i>PokeAPI-Dex </a>
-		</div>
-	</nav>
+    <!-- Navigation bar -->
+    <nav class="animated slideInLeft">
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo center">
+            <i class='icon'></i>PokeAPI-Dex </a>
+        </div>
+    </nav>
 
-	<!-- Main page -->
-	<div class="row" ng-app="pokeApp" ng-controller="pokeCtrl">
-		<div class="input-field animated fadeIn validate">
-			<i class="material-icons prefix">search</i>
-			<input  id="searchBar" type="text" ng-model="searchPoke" value="">
-			<label for="icon_prefix">Search for Pokemon</label>
-		</div>
+    <!-- Main page -->
+    <div class="row" ng-app="pokeApp" ng-controller="pokeCtrl">
+        <div class="input-field animated fadeIn validate">
+            <i class="material-icons prefix">search</i>
+            <input  id="searchBar" type="text" ng-model="searchPoke" value="">
+            <label for="icon_prefix">Search for Pokemon</label>
+        </div>
 
-		<!-- List of Pokemon -->
-		<div class="container">
-			<ul class="collection">
-				<li class=" collection-item avatar" ng-class="pokemon.color" ng-repeat="pokemon in pokemon_list | filter:searchPoke" >
-					<a href="#pokemon_modal" class="blue-grey-text text-darken-4" ng-click="getPokemonObject(pokemon.id, pokemon.name);">
-					<img ng-src="img/artwork/{{pokemon.id}}.png" class="circle">
-					<h5 class="title capitalize"> {{ pokemon.name }}</h5>
-					<p>[#{{pokemon.id}}]</p>
-					<a class="secondary-content"><i class="material-icons prefix">info_outline</i></a>
-					</a>
-				</li>
-			</ul>
-			<br><br>
-			<div id="bottom"></div>
-		</div>
+        <!-- List of Pokemon -->
+        <div class="container">
+            <ul class="collection">
+                <li class=" collection-item avatar" ng-class="pokemon.color" ng-repeat="pokemon in pokemon_list | filter:searchPoke" >
+                    <a href="#pokemon_modal" class="blue-grey-text text-darken-4" ng-click="getPokemonObject(pokemon.id, pokemon.name);">
+                    <img ng-src="img/artwork/{{pokemon.id}}.png" class="circle">
+                    <h5 class="title capitalize"> {{ pokemon.name }}</h5>
+                    <p>[#{{pokemon.id}}]</p>
+                    <a class="secondary-content"><i class="material-icons prefix">info_outline</i></a>
+                    </a>
+                </li>
+            </ul>
+            <br><br>
+            <div id="bottom"></div>
+        </div>
 
-		<!-- Modal Structure -->
-		<div id="pokemon_modal" class="modal bottom-sheet animated fadeIn">
-			<div id ="pokecontent" class="modal-content row">
-				<!-- Navigation -->
-				<div>
-					<h4 class="center blue-grey-text text-darken-4" id="pokename"></h4>
-					<span class="left">
-						<a class="btn waves-effect waves-red red-text text-lighten-1 white" ng-click="prevPokemon();"><i class="material-icons prefix">keyboard_arrow_left</i></a>
-					</span><span class="right">
-						<a class="btn white red-text text-lighten-1 waves-effect waves-red" ng-click="nextPokemon();">
-							<i class="material-icons prefix">keyboard_arrow_right</i>
-						</a>
-					</span>
-				</div>
+        <!-- Modal Structure -->
+        <div id="pokemon_modal" class="modal bottom-sheet animated fadeIn">
+            <div id ="pokecontent" class="modal-content row">
+                <!-- Navigation -->
+                <div>
+                    <h4 class="center blue-grey-text text-darken-4" id="pokename"></h4>
+                    <span class="left">
+                        <a class="btn waves-effect waves-red red-text text-lighten-1 white" ng-click="prevPokemon();"><i class="material-icons prefix">keyboard_arrow_left</i></a>
+                    </span><span class="right">
+                        <a class="btn white red-text text-lighten-1 waves-effect waves-red" ng-click="nextPokemon();">
+                            <i class="material-icons prefix">keyboard_arrow_right</i>
+                        </a>
+                    </span>
+                </div>
 
-				<!-- Name and artwork -->
-				<div class="center-align" onclick="showDescription();"><span class="chip">
-					<img id="pokechip" src="img/pokemon/1.png"><a id="genera" class="blue-grey-text text-darken-3"></a>  <i class='tiny material-icons'>info_outline</i>
-					</span>
-				</div>
-				<p class="center"><img id="pokepic" src="img/artwork/1.png"></p>
+                <!-- Name and artwork -->
+                <div class="center-align" onclick="showDescription();"><span class="chip">
+                    <img id="pokechip" src="img/pokemon/1.png"><a id="genera" class="blue-grey-text text-darken-3"></a>  <i class='tiny material-icons'>info_outline</i>
+                    </span>
+                </div>
+                <p class="center"><img id="pokepic" src="img/artwork/1.png"></p>
 
-				<div class="row">
-				    <div id="info" class="center-align">
-						<!-- Types -->
-				    	<div class="col s12 m6 l6">
-							<div class="card light-green lighten-5 center-align">
-								<div class="card-content" >
-									<label class="blue-grey-text text-darken-4 flow-text ">Types:</label><br>
-									<a class="btn black-text" id="type1" ng-click="displayType(0);"></a>
-									<a class="btn black-text" id="type2" ng-click="displayType(1);"></a>
-								</div>
-							</div>
-						</div>
+                <div class="row">
+                    <div id="info" class="center-align">
+                        <!-- Types -->
+                        <div class="col s12 m6 l6">
+                            <div class="card light-green lighten-5 center-align">
+                                <div class="card-content" >
+                                    <label class="blue-grey-text text-darken-4 flow-text ">Types:</label><br>
+                                    <a class="btn black-text" id="type1" ng-click="displayType(0);"></a>
+                                    <a class="btn black-text" id="type2" ng-click="displayType(1);"></a>
+                                </div>
+                            </div>
+                        </div>
 
-						<!-- Abilities -->
-						<div class="col s12 m6 l6">
-							<div class="card light-green lighten-5 center-align">
-								<div class="card-content">
-									<label class="blue-grey-text text-darken-4 flow-text ">Abilities:</label><br>
-									<a class="btn black-text waves-effect waves-light" ng-class="ability.color" ng-repeat="ability in poke_abilities" 
-									ng-click="displayAbility(ability);">{{ability.name}}
-									</a>
-								</div>
-							</div>
-            			</div>
+                        <!-- Abilities -->
+                        <div class="col s12 m6 l6">
+                            <div class="card light-green lighten-5 center-align">
+                                <div class="card-content">
+                                    <label class="blue-grey-text text-darken-4 flow-text ">Abilities:</label><br>
+                                    <a class="btn black-text waves-effect waves-light" ng-class="ability.color" ng-repeat="ability in poke_abilities"
+                                    ng-click="displayAbility(ability);">{{ability.name}}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
 
-						<!-- Stats -->
-						<div class="col s12 m6 l6">
-							<div class="card light-green lighten-5 center-align">
-								<div class="card-content">
-									<span class="blue-grey-text text-darken-4 flow-text center">Stats:</span><br>
-									<canvas id="pokeStats" width="250" height="250"></canvas>
-									<hr>
-									<a class="btn white waves-effect waves-yellow" onclick="topStats();">
-										<i title="Top 3 stats" class='material-icons prefix yellow-text text-darken-2'>stars</i>
-										<span class= "blue-text" id="best_stats"></span>
-									</a>
-									<a class="btn blue-grey waves-effect waves-light" onclick="helpStats();">
-									<i class='material-icons prefix'>help_outline</i></a>
-								</div>
-							</div>
-						</div>
+                        <!-- Stats -->
+                        <div class="col s12 m6 l6">
+                            <div class="card light-green lighten-5 center-align">
+                                <div class="card-content">
+                                    <span class="blue-grey-text text-darken-4 flow-text center">Stats:</span><br>
+                                    <canvas id="pokeStats" width="250" height="250"></canvas>
+                                    <hr>
+                                    <a class="btn white waves-effect waves-yellow" onclick="topStats();">
+                                        <i title="Top 3 stats" class='material-icons prefix yellow-text text-darken-2'>stars</i>
+                                        <span class= "blue-text" id="best_stats"></span>
+                                    </a>
+                                    <a class="btn blue-grey waves-effect waves-light" onclick="helpStats();">
+                                    <i class='material-icons prefix'>help_outline</i></a>
+                                </div>
+                            </div>
+                        </div>
 
-						<!-- Gender -->
-						<div class="col s12 m6 l6">
-							<div class="card light-green lighten-5 center-align">
-								<div class="card-content">
-									<label class="blue-grey-text text-darken-4 flow-text ">Gender:</label><br>
-									<span id="gender" class="flow-text">Loading...</span>
-									<div class="progress">
-									<div class="determinate blue" id = "gender_bar" style="width: 70%"></div>
-								</div>
-								</div>
-							</div>
-						</div>
+                        <!-- Gender -->
+                        <div class="col s12 m6 l6">
+                            <div class="card light-green lighten-5 center-align">
+                                <div class="card-content">
+                                    <label class="blue-grey-text text-darken-4 flow-text ">Gender:</label><br>
+                                    <span id="gender" class="flow-text">Loading...</span>
+                                    <div class="progress">
+                                    <div class="determinate blue" id = "gender_bar" style="width: 70%"></div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
 
-						<!-- Egg groups -->
-						<div class="col s12 m6 l6">
-							<div class="card light-green lighten-5 center-align">
-								<div class="card-content">
-									<label class="blue-grey-text text-darken-4 flow-text ">Egg groups:</label><br>
-									<span id="egg_groups" class="btn blue-grey waves-effect waves-light" ng-click="showMates();">Loading...</span>
-								</div>
-							</div>
-						</div>
+                        <!-- Egg groups -->
+                        <div class="col s12 m6 l6">
+                            <div class="card light-green lighten-5 center-align">
+                                <div class="card-content">
+                                    <label class="blue-grey-text text-darken-4 flow-text ">Egg groups:</label><br>
+                                    <span id="egg_groups" class="btn blue-grey waves-effect waves-light" ng-click="showMates();">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
 
-						<!-- Evo chain -->
-						<div class="col s12 m12 l6">
-							<div class="card light-green lighten-5 center-align">
-								<div class="card-content">
-									<label class="blue-grey-text text-darken-4 flow-text ">Evo chain:</label><br>
-									<div class="flow-text" id="evo">Loading...</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+                        <!-- Evo chain -->
+                        <div class="col s12 m12 l6">
+                            <div class="card light-green lighten-5 center-align">
+                                <div class="card-content">
+                                    <label class="blue-grey-text text-darken-4 flow-text ">Evo chain:</label><br>
+                                    <div class="flow-text" id="evo">Loading...</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-		<!-- Search button -->
-		<div class="fixed-action-btn " id="FAB">
-			<a class="btn-floating btn-large red btn tooltipped" href="#searchBar"
-			data-position="left" data-delay="50" data-tooltip="Search Pokemon">
-				<i class="large material-icons">search</i>
-			</a>
-			<ul>
-				<li><a class="btn-floating blue lighten-1 btn tooltipped"
-					data-position="left" data-delay="50" data-tooltip="Scroll to the top" onclick="goTop();" id="topBtn"><i class="material-icons">keyboard_arrow_up</i></a>
-				</li>
-				<li><a class="btn-floating green lighten-1 btn tooltipped"
-					data-position="left" data-delay="50" data-tooltip="Scroll to the bottom" onclick="goBottom();" id="bottomBtn"><i class="material-icons">keyboard_arrow_down</i></a>
-				</li>
-			</ul>
-		</div>
-	</div>
+        <!-- Search button -->
+        <div class="fixed-action-btn " id="FAB">
+            <a class="btn-floating btn-large red btn tooltipped" href="#searchBar"
+            data-position="left" data-delay="50" data-tooltip="Search Pokemon">
+                <i class="large material-icons">search</i>
+            </a>
+            <ul>
+                <li><a class="btn-floating blue lighten-1 btn tooltipped"
+                    data-position="left" data-delay="50" data-tooltip="Scroll to the top" onclick="goTop();" id="topBtn"><i class="material-icons">keyboard_arrow_up</i></a>
+                </li>
+                <li><a class="btn-floating green lighten-1 btn tooltipped"
+                    data-position="left" data-delay="50" data-tooltip="Scroll to the bottom" onclick="goBottom();" id="bottomBtn"><i class="material-icons">keyboard_arrow_down</i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
 
-	<!-- Footer -->
-	<footer class="page-footer animated slideInLeft" id="footer">
-		<div class="footer-copyright">
-			<div class="container">
-				Made by <a class="black-text text-lighten-1">Nhan Tran-Phan </a>
+    <!-- Footer -->
+    <footer class="page-footer animated slideInLeft" id="footer">
+        <div class="footer-copyright">
+            <div class="container">
+                Made by <a class="black-text text-lighten-1">Nhan Tran-Phan </a>
 
-			</div>
-		</div>
-	</footer>
+            </div>
+        </div>
+    </footer>
 
-	<!--  Scripts-->
-	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.js"></script>
-	<script src="js/pokeCtrl.js"></script>
-	<script src="js/pageCtrl.js"></script>
-	<script src="js/libraries/sweetalert.min.js"></script>
-	<script src="js/libraries/materialize.min.js"></script>
-	<script src="js/libraries/init.js"></script>
+    <!--  Scripts-->
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.js"></script>
+    <script src="js/pokeCtrl.js"></script>
+    <script src="js/pageCtrl.js"></script>
+    <script src="js/libraries/sweetalert.min.js"></script>
+    <script src="js/libraries/materialize.min.js"></script>
+    <script src="js/libraries/init.js"></script>
 </body>
 </html>
