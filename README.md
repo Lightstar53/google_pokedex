@@ -16,3 +16,5 @@ v1 notes
 * Battle type weakness/ strength calculator
 * Recommended Natures based on battle stats
 * Deployed to Heroku
+
+Hosted here: https://pokeapi-dex.herokuapp.com/
