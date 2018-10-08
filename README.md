@@ -1,4 +1,4 @@
-pokeapi-dex v1
+pokeapi-dex
 ===================
 
 v1 of Pokedex using AngularJS and MaterializeCSS.
