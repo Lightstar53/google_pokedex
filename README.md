@@ -18,3 +18,5 @@ v1 notes
 * Deployed to Heroku
 
 Hosted here: https://pokeapi-dex.herokuapp.com/
+
+<img src="www/img/pokedex.gif" alt="pokedex" width="400"/>
